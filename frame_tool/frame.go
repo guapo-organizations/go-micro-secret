@@ -19,13 +19,18 @@ func (this *LyFrameTool) initMysql() {
 	if err != nil {
 		log.Fatalln("数据库db配置文件加载失败", err)
 	}
-	ip := viper.GetString("ip")
-	port := viper.GetString("port")
-	user := viper.GetString("user")
-	passwd := viper.GetString("passwd")
-	db := viper.GetString("db")
-	log.Println( fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", user, passwd, ip, port, db))
-	database.CreateMysqlConnection(user, passwd, ip, port, db)
+	start := viper.GetBool("start")
+
+	if start == true {
+		//开启数据库
+		ip := viper.GetString("ip")
+		port := viper.GetString("port")
+		user := viper.GetString("user")
+		passwd := viper.GetString("passwd")
+		db := viper.GetString("db")
+		log.Println(fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", user, passwd, ip, port, db))
+		database.CreateMysqlConnection(user, passwd, ip, port, db)
+	}
 }
 
 //从配置文件中获取端口
