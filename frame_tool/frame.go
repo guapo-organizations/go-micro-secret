@@ -1,7 +1,6 @@
 package frame_tool
 
 import (
-	"fmt"
 	"github.com/guapo-organizations/go-micro-secret/database"
 	"github.com/spf13/viper"
 	"log"
@@ -28,7 +27,6 @@ func (this *LyFrameTool) initMysql() {
 		user := viper.GetString("user")
 		passwd := viper.GetString("passwd")
 		db := viper.GetString("db")
-		log.Println(fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Asia%2FShanghai", user, passwd, ip, port, db))
 		database.CreateMysqlConnection(user, passwd, ip, port, db)
 	}
 }

@@ -15,7 +15,7 @@ func CreateMysqlConnection(user, passwd, ip, port, dbname string) {
 
 	mysql_pool.New = func() interface{} {
 
-		db, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Asia%2FShanghai", user, passwd, ip, port, dbname))
+		db, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", user, passwd, ip, port, dbname))
 		if err != nil {
 			log.Fatalln("链接mysql出错：", err)
 		}
