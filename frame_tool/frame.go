@@ -14,7 +14,6 @@ type LyFrameTool struct {
 
 //初始化数据库
 func (this *LyFrameTool) initMysql() {
-	viper.AddConfigPath(this.ConfigPath)
 	viper.SetConfigName("db")
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -31,12 +30,13 @@ func (this *LyFrameTool) initMysql() {
 
 //从配置文件中获取端口
 func (this *LyFrameTool) getConfigProt() string {
-	viper.AddConfigPath(this.ConfigPath)
-	return "";
+	viper.SetConfigName("service")
+	port := viper.GetString("port")
+	return port;
 }
 
 func (this *LyFrameTool) Run() (port string) {
-
+	viper.AddConfigPath(this.ConfigPath)
 	//初始化数据库
 	this.initMysql()
 
