@@ -17,7 +17,7 @@ func (this *LyFrameTool) initMysql() {
 	viper.SetConfigName("db")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatalln("数据库配置文件加载失败", err)
+		log.Fatalln("数据库db配置文件加载失败", err)
 	}
 	ip := viper.GetString("ip")
 	port := viper.GetString("port")
@@ -31,6 +31,10 @@ func (this *LyFrameTool) initMysql() {
 //从配置文件中获取端口
 func (this *LyFrameTool) getConfigProt() string {
 	viper.SetConfigName("service")
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatalln("grpc服务d配置文件加载失败", err)
+	}
 	port := viper.GetString("port")
 	return port;
 }
