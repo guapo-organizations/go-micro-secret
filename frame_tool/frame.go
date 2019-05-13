@@ -3,6 +3,7 @@ package frame_tool
 import (
 	"github.com/guapo-organizations/go-micro-secret/cache"
 	"github.com/guapo-organizations/go-micro-secret/database"
+	"github.com/guapo-organizations/go-micro-secret/frame_tool/service"
 	"github.com/spf13/viper"
 	"log"
 )
@@ -54,23 +55,28 @@ func (this *LyFrameTool) initRedis() {
 }
 
 //从配置文件中获取端口
-func (this *LyFrameTool) getConfigProt() string {
+func (this *LyFrameTool) GetGrpcServiceInfo() service.ServiceInfo {
 	viper.SetConfigName("service")
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalln("grpc服务d配置文件加载失败", err)
 	}
+	ip := viper.GetString("ip")
 	port := viper.GetString("port")
-	return port;
+
+	return service.ServiceInfo{
+		Ip:   ip,
+		Port: port,
+	};
 }
 
 //初始化一下服务需要用的中间件
-func (this *LyFrameTool) Run() (port string) {
+func (this *LyFrameTool) Run() service.ServiceInfo {
 	viper.AddConfigPath(this.ConfigPath)
 	//初始化数据库
 	this.initMysql()
 	//初始化redis
 	this.initRedis()
-	
-	return this.getConfigProt()
+
+	return this.GetGrpcServiceInfo()
 }
