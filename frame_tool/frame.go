@@ -77,10 +77,9 @@ func (this *LyFrameTool) initGrpcGatewayServiceInfo() {
 	start := viper.GetBool("start")
 	if start == true {
 		//开启redis
-		ip := viper.GetString("ip")
-		port := viper.GetString("port")
-		describe := viper.GetString("describe")
-		service.CreateGrpcGatewayServiceInfo(ip, port, describe)
+		port := viper.GetString("gateway_port")
+		grpc_service := service.GetGrpcServiceInfo()
+		service.CreateGrpcGatewayServiceInfo(grpc_service, port)
 	}
 }
 
