@@ -11,12 +11,6 @@ import (
 type LyFrameTool struct {
 	//配置文件路径
 	ConfigPath string
-
-	//grpc服务器连接信息
-	grpc_service_info *service.ServiceInfo
-
-	//grpc网关服务器连接信息
-	grpc_gateway_service_info *service.GatewayServiceInfo
 }
 
 //初始化数据库,只是尝试的开启而已，如果配置false就不开启，但是如果服务里面想手动连接数据库的话，可以手动调用连接数据库
@@ -70,19 +64,7 @@ func (this *LyFrameTool) initGrpcServiceInfo() {
 	ip := viper.GetString("ip")
 	port := viper.GetString("port")
 	describe := viper.GetString("describe")
-	this.grpc_service_info = &service.ServiceInfo{
-		Ip:       ip,
-		Port:     port,
-		Describe: describe,
-	}
-}
-
-//获取grpc服务信息
-func (this *LyFrameTool) GetGrpcServiceInfo() *service.ServiceInfo {
-	if this.grpc_service_info == nil {
-		this.Run()
-	}
-	return this.grpc_service_info
+	service.CreateGrpcServiceInfo(ip, port, describe)
 }
 
 //解析grpc网关服务信息
@@ -98,20 +80,8 @@ func (this *LyFrameTool) initGrpcGatewayServiceInfo() {
 		ip := viper.GetString("ip")
 		port := viper.GetString("port")
 		describe := viper.GetString("describe")
-		this.grpc_gateway_service_info = &service.GatewayServiceInfo{
-			Ip:       ip,
-			Port:     port,
-			Describe: describe,
-		}
+		service.CreateGrpcGatewayServiceInfo(ip, port, describe)
 	}
-}
-
-//获取grpc网关信息
-func (this *LyFrameTool) GetGrpcGatewayServiceInfo() *service.GatewayServiceInfo {
-	if this.grpc_gateway_service_info == nil {
-		this.Run()
-	}
-	return this.grpc_gateway_service_info
 }
 
 //初始化一下服务需要用的中间件
