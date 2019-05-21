@@ -6,8 +6,8 @@ import (
 )
 
 //创建连接服务发现的config配置对象
-func CreateConfig(ip string, port int64) (config *api.Config) {
+func CreateConfig(ip string, port string) (config *api.Config) {
 	config = api.DefaultConfig()
-	config.Address = fmt.Sprintf("%s:%d", ip, port)
+	config.Address = fmt.Sprintf("%s:%s", ip, port)
 	return config
 }

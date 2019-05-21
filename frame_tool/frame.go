@@ -2,6 +2,7 @@ package frame_tool
 
 import (
 	"github.com/guapo-organizations/go-micro-secret/cache"
+	"github.com/guapo-organizations/go-micro-secret/consul"
 	"github.com/guapo-organizations/go-micro-secret/database"
 	"github.com/guapo-organizations/go-micro-secret/frame_tool/service"
 	"github.com/spf13/viper"
@@ -61,10 +62,25 @@ func (this *LyFrameTool) initGrpcServiceInfo() {
 	if err != nil {
 		log.Fatalln("grpc服务配置文件加载失败", err)
 	}
+	//grpc服务信息
+	//服务所在ip
 	ip := viper.GetString("ip")
+	//服务所在端口
 	port := viper.GetString("port")
+	//服务描述
 	describe := viper.GetString("describe")
+	//服务名字
+	name := viper.GetString("name")
+	//注册grpc服务
 	service.CreateGrpcServiceInfo(ip, port, describe)
+
+	//consul服务发现信息
+	consul_info := viper.GetStringMapString("consul")
+	//访问consul客户端的配置
+	consul_config := consul.CreateConfig(consul_info["ip"], consul_info["port"])
+
+	//异步去注册服务发现，如果失败，程序终止,checkPort是心跳检测的端口
+	go consul.RegisterServer(consul_config, consul_info["checkPort"], name, ip, port, nil)
 }
 
 //解析grpc网关服务信息
