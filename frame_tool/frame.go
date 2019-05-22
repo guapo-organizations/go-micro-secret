@@ -75,12 +75,15 @@ func (this *LyFrameTool) initGrpcServiceInfo() {
 	service.CreateGrpcServiceInfo(ip, port, describe)
 
 	//consul服务发现信息
-	consul_info := viper.GetStringMapString("consul")
-	//访问consul客户端的配置
-	consul_config := consul.CreateConfig(consul_info["ip"], consul_info["port"])
-
-	//异步去注册服务发现，如果失败，程序终止,checkPort是心跳检测的端口
-	go consul.RegisterServer(consul_config, consul_info["checkPort"], name, ip, port, nil)
+	consul_start := viper.GetStringMap("consul")
+	if consul_start["start"].(bool) {
+		
+		consul_info := viper.GetStringMapString("consul")
+		//访问consul客户端的配置
+		consul_config := consul.CreateConfig(consul_info["ip"], consul_info["port"])
+		//异步去注册服务发现，如果失败，程序终止,checkPort是心跳检测的端口
+		go consul.RegisterServer(consul_config, consul_info["checkPort"], name, ip, port, nil)
+	}
 }
 
 //解析grpc网关服务信息
