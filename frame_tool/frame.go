@@ -71,18 +71,32 @@ func (this *LyFrameTool) initGrpcServiceInfo() {
 	describe := viper.GetString("describe")
 	//服务名字
 	name := viper.GetString("name")
+	//服务发现的心跳检测端口
+	check_port := viper.GetString("checkPort")
 	//注册grpc服务
-	service.CreateGrpcServiceInfo(ip, port, describe)
+	service.CreateGrpcServiceInfo(ip, port, describe, name, check_port, nil)
 
-	//consul服务发现信息
-	consul_start := viper.GetStringMap("consul")
-	if consul_start["start"].(bool) {
-		
-		consul_info := viper.GetStringMapString("consul")
-		//访问consul客户端的配置
-		consul_config := consul.CreateConfig(consul_info["ip"], consul_info["port"])
+}
+
+//consul服务发现注册
+func (this *LyFrameTool) ininConsul() {
+	viper.SetConfigName("consul")
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatalln("consul服务发现配置文件加载失败", err)
+	}
+	//是否开启服务发现
+	start := viper.GetBool("start")
+	if start == true {
+		//服务发现连接地址
+		ip := viper.GetString("ip")
+		//服务发现连接端口
+		port := viper.GetString("port")
+
+		//创建连接服务发现的配置
+		consul_config := consul.CreateConfig(ip, port)
 		//异步去注册服务发现，如果失败，程序终止,checkPort是心跳检测的端口
-		go consul.RegisterServer(consul_config, consul_info["checkPort"], name, ip, port, nil)
+		go consul.RegisterServer(consul_config, service.GetGrpcServiceInfo())
 	}
 }
 
@@ -112,6 +126,9 @@ func (this *LyFrameTool) Run() {
 
 	//初始化grpc服务
 	this.initGrpcServiceInfo()
+
+	//初始化服务发现
+	this.ininConsul()
 
 	//初始化grpc网关服务
 	this.initGrpcGatewayServiceInfo()
