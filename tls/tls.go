@@ -13,7 +13,6 @@ func init() {
 	basepath = filepath.Dir(currentFile)
 }
 
-
 //文件的绝对路径
 //
 func Path(rel string) string {

@@ -7,7 +7,7 @@ import (
 
 //consul过滤的语法参考这里
 //https://www.consul.io/api/agent/service.html
-func FindService(config *api.Config, service_name, tag string, ) (*api.AgentService, error) {
+func FindService(config *api.Config, service_name, tag string) (*api.AgentService, error) {
 	client, err := api.NewClient(config)
 	if err != nil {
 		return nil, fmt.Errorf("consul 客户端FindService错误 :", err)

@@ -1,6 +1,7 @@
 package service
 
 var grpc_gateway_service_info GatewayServiceInfo
+
 //grpc网关服务的连接信息
 
 type GatewayServiceInfo struct {
@@ -19,7 +20,6 @@ func CreateGrpcGatewayServiceInfo(grpc_service_info ServiceInfo, gateway_port st
 		GatewayPort: gateway_port,
 	}
 }
-
 
 func GetGrpcGateWayServiceInfo() GatewayServiceInfo {
 	return grpc_gateway_service_info

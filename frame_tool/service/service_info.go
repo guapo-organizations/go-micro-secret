@@ -1,6 +1,7 @@
 package service
 
 var grpc_service_info ServiceInfo
+
 //grpc服务的连接信息
 type ServiceInfo struct {
 	//服务所在的地址
