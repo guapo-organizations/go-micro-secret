@@ -6,8 +6,8 @@ import (
 )
 
 //创建服务的唯一id
-func CreateAgentServiceUniqueID(name string, address string, port string) string {
-	ID := fmt.Sprintf("service-name:%s,service-address:%s,service-port:%s", name, address, port)
+func CreateAgentServiceUniqueID(name string) string {
+	ID := fmt.Sprintf("zldz:%s:zldz", name)
 	unique_id := md5.Sum([]byte(ID))
 	return fmt.Sprintf("%x", unique_id)
 }

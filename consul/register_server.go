@@ -29,7 +29,7 @@ func RegisterServer(config *api.Config, service_info service.ServiceInfo) {
 
 	//服务
 	registeration := new(api.AgentServiceRegistration)
-	registeration.ID = CreateAgentServiceUniqueID(service_info.Name, service_info.Ip, service_info.Port)
+	registeration.ID = CreateAgentServiceUniqueID(service_info.Name)
 	registeration.Name = service_info.Name
 	port64, _ := strconv.ParseInt(service_info.Port, 10, 64)
 	registeration.Port = int(port64)

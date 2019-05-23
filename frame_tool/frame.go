@@ -7,6 +7,7 @@ import (
 	"github.com/guapo-organizations/go-micro-secret/frame_tool/service"
 	"github.com/spf13/viper"
 	"log"
+	"strings"
 )
 
 type LyFrameTool struct {
@@ -73,8 +74,10 @@ func (this *LyFrameTool) initGrpcServiceInfo() {
 	name := viper.GetString("name")
 	//服务发现的心跳检测端口
 	check_port := viper.GetString("checkPort")
+	//服务发现的tags，用户过滤之类的
+	tags := viper.GetString("tags")
 	//注册grpc服务
-	service.CreateGrpcServiceInfo(ip, port, describe, name, check_port, nil)
+	service.CreateGrpcServiceInfo(ip, port, describe, name, check_port, strings.Split(tags, " "))
 
 }
 
