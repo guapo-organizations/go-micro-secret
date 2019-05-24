@@ -97,7 +97,11 @@ func (this *LyFrameTool) ininConsul() {
 		port := viper.GetString("port")
 
 		//创建连接服务发现的配置
-		consul_config := consul.CreateConfig(ip, port)
+		consul.CreateConfig(ip, port)
+		consul_config, err := consul.GetConfig()
+		if err != nil {
+			log.Fatalln("consul配置获取不到")
+		}
 		//异步去注册服务发现，如果失败，程序终止,checkPort是心跳检测的端口
 		go consul.RegisterServer(consul_config, service.GetGrpcServiceInfo())
 	}

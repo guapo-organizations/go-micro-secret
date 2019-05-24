@@ -8,10 +8,9 @@ import (
 var config *api.Config
 
 //创建连接服务发现的config配置对象
-func CreateConfig(ip string, port string) (config *api.Config) {
+func CreateConfig(ip string, port string){
 	config = api.DefaultConfig()
 	config.Address = fmt.Sprintf("%s:%s", ip, port)
-	return config
 }
 
 func GetConfig() (*api.Config, error) {
