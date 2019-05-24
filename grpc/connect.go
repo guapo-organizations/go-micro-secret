@@ -23,7 +23,7 @@ func GetGrpcConnet(servier_name string, tag string, config *api.Config, ) (*grpc
 		return nil, err
 	}
 
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", agent_service.ID, agent_service.Port), grpc.WithTransportCredentials(creds))
+	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", agent_service.Address, agent_service.Port), grpc.WithTransportCredentials(creds))
 
 	if err != nil {
 		return nil, err
