@@ -10,11 +10,11 @@ import (
 var redis_client *redis.Client
 
 //连接redis
-func CreateRedisConnection(ip, port string, db int) {
+func CreateRedisConnection(ip, port, passwd string, db int) {
 
 	redis_client = redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%s", ip, port),
-		Password: "",
+		Password: passwd,
 		DB:       db,
 	})
 }

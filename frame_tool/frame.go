@@ -51,8 +51,9 @@ func (this *LyFrameTool) initRedis() {
 		ip := viper.GetString("ip")
 		port := viper.GetString("port")
 		db := viper.GetInt("db")
+		passwd := viper.GetString("passwd")
 		//这个方法可以手动连接redis
-		cache.CreateRedisConnection(ip, port, db)
+		cache.CreateRedisConnection(ip, port, passwd, db)
 	}
 }
 
