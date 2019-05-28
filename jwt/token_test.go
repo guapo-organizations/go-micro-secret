@@ -35,8 +35,8 @@ func TestJwtTokenDecode(t *testing.T) {
 	}
 
 	log.Println(jwt_map["my_data"])
-	//这里会输出变量的类型
-	log.Printf("%T",jwt_map["my_data"])
+	//这里会输出变量的类型，也可以用golang的反射，得出变量的类型reflect.TypeOf
+	log.Printf("%T", jwt_map["my_data"])
 	//动态打印一下类型
 	switch my_data_type := jwt_map["my_data"].(type) {
 	case []interface{}:
