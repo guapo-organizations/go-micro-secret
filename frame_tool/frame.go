@@ -108,22 +108,6 @@ func (this *LyFrameTool) ininConsul() {
 	}
 }
 
-//解析grpc网关服务信息
-func (this *LyFrameTool) initGrpcGatewayServiceInfo() {
-	viper.SetConfigName("grpc_gateway_service")
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalln("grpc 网关服务配置文件加载失败", err)
-	}
-	start := viper.GetBool("start")
-	if start == true {
-		//开启redis
-		port := viper.GetString("gateway_port")
-		grpc_service := service.GetGrpcServiceInfo()
-		service.CreateGrpcGatewayServiceInfo(grpc_service, port)
-	}
-}
-
 //初始化一下服务需要用的中间件
 func (this *LyFrameTool) Run() {
 	viper.AddConfigPath(this.ConfigPath)
@@ -131,13 +115,8 @@ func (this *LyFrameTool) Run() {
 	this.initMysql()
 	//初始化redis
 	this.initRedis()
-
 	//初始化grpc服务
 	this.initGrpcServiceInfo()
-
 	//初始化服务发现
 	this.ininConsul()
-
-	//初始化grpc网关服务
-	this.initGrpcGatewayServiceInfo()
 }
