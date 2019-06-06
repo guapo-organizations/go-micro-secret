@@ -54,6 +54,7 @@ func (this *LyGatewayFrameTool) initGrpcGatewayServiceInfo() {
 }
 
 func (this *LyGatewayFrameTool) Run() {
+	viper.AddConfigPath(this.ConfigPath)
 	//初始化服务发现
 	this.initGrpcServiceInfo()
 	//初始化grpc网关服务
