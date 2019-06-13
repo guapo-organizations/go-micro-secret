@@ -10,7 +10,7 @@ import (
 func FindService(config *api.Config, service_name, tag string) (*api.AgentService, error) {
 	client, err := api.NewClient(config)
 	if err != nil {
-		return nil, fmt.Errorf("consul 客户端FindService错误 :", err)
+		return nil, fmt.Errorf("consul 客户端FindService错误 :%s", err)
 	}
 
 	var services map[string]*api.AgentService
